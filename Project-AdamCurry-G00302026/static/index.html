@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+	<link rel="stylesheet" href="style.css">
+	<script>
+$(document).ready(function(){
+    $("#2010button").click(function(){
+        $.get("/2010", function(data, status){
+		$("#year").text(data);
+        });
+    });
+});
+$(document).ready(function(){
+    $("#ausbutton").click(function(){
+        $.get("http://127.0.0.1:5984/country/historyDB/", function(data, status){
+		$("#year").text(data.content);
+        });
+    });
+});
+$(document).ready(function(){
+    $("#canbutton").click(function(){
+        $.get("/2012", function(data, status){
+		$("#year").text(data);
+        });
+    });
+});
+
+$(document).ready(function(){
+    $("button").click(function(){
+        $.get("/static/history.asp", function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+    });
+});
+function showHint(str) {
+    if (str.length == 0) { 
+        document.getElementById("#filter").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("#filter").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "/static/history.php"+str, true);
+        xmlhttp.send();
+    }
+}
+</script>
+  <style>
+  .bg-1 { 
+      background-color: blue;
+      color: white;
+  }
+  div {
+    background-color: brown;
+}
+h1 {
+background-color: grey;
+}
+  </style>
+   </head>
+   <body>
+   <nav class="navbar navbar-inverse">
+  <ul class="nav navbar-nav">
+    <li><a href="#capitals">Winners</a></li>
+    <li><a href="#filter">Eurovision</a></li>
+  </ul>
+</nav>
+   <div class="bg-1">
+  <div class="container text-center">
+    <h1>Eurovision</h1>
+    <img src="euro.jpg" class="img-circle" alt="history" width="350" height="350">
+    <h1>Information</h1>
+  </div>
+</div
+
+<div id ="capital" class="container text-center">
+  <h2>Click on a Year to Find Out who won that year!</h2> 
+   <input type="submit" name="2010" id="2010button" value="2010" class="btn btn-primary">
+	   <input type="submit" name="2011" id="ausbutton" value="2011" class="btn btn-primary">
+    <input type="submit" name="2012" id="canbutton" value="2012" class="btn btn-primary">
+	</div>
+   <div id = "year" style="text-align: center">
+</div>
+<button>Click Here Find Out who I think will win this next year!</button>
+<div style="text-align: center">
+<p><b>Eurovision Winning history:</b></p>
+<form> 
+Year: <input type="text" onkeyup="showHint(this.value)">
+</form>
+<p>Suggestions: <span id="filter"></span></p>
+</div>
+<div id = "filter">
+   </body> 
+   </html>
+   
+   
+   
+
